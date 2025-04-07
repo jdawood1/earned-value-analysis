@@ -1,0 +1,23 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# SQLite database
+EVA_data.db
+
+# Output files
+EVA_Analysis.csv
+
+# Plots or screenshots (optional, not tracked)
+*.png
+screenshots/
+
+# OS files
+.DS_Store
+
+# Jupyter checkpoints (if applicable)
+.ipynb_checkpoints/
