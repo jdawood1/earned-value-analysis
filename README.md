@@ -1,97 +1,77 @@
-# Earned Value Analysis (EVA) – Interpretation Report
+# Earned Value Analysis (EVA) – Project Guide
 
-This report presents a detailed analysis and interpretation of Earned Value Analysis (EVA) metrics derived from a multi-module project over a 7-week timeline. The evaluation focuses on schedule performance, cost efficiency, and comparative module outcomes, based entirely on programmatically extracted data from `EVA_Analysis.csv`, in accordance with the assignment requirement to avoid manual calculation.
-
----
-
-### A. Weeks in Which the Project Was Ahead of Schedule ($SPI > 1$)
-
-To identify periods of faster progress, weeks with a Schedule Performance Index ($SPI > 1$) were examined. An $SPI > 1$ indicates that the Earned Value ($EV$) exceeded the Planned Value ($PV$)—a sign that the project advanced faster than scheduled.
-
-**Key Observations:**
-
-- Several tasks during Weeks 2 through 6 exhibited $SPI > 1$.
-- Notably, Module A - Task 2 and Module A - Task 3 recorded $SPI$ values exceeding $2.0$, with a peak $SPI$ of $4.04$ between Weeks 3–5.
-- Module B - Task 2 recorded a striking $SPI$ of $10.33$ in Week 7, signaling significant acceleration in schedule adherence.
-
-**Interpretation:** The project outpaced its planned schedule particularly during the mid-to-late phases, with exceptional performance in specific tasks across both modules.
+This project implements a complete workflow for conducting Earned Value Analysis (EVA) on a multi-module project spanning seven weeks. It uses Python to process cumulative cost and value data, calculate industry-standard EVA metrics, and produce a final report.
 
 ---
 
-### B. Weeks in Which the Project Was Under Budget ($CPI > 1$)
+## 📁 Project Structure
 
-The Cost Performance Index ($CPI$) was used to assess cost efficiency. A $CPI > 1$ indicates that less money was spent than planned for the amount of work completed.
-
-**Key Observations:**
-
-- In Week 3, Module A - Task 2 reported a $CPI$ of $3.64$.
-- In Week 7, Module B - Task 2 recorded a $CPI$ of $5.17$.
-- $CPI > 1$ was observed in multiple tasks between Weeks 2–6, predominantly within Module A.
-
-**Interpretation:** These figures indicate that select teams delivered work with high cost efficiency during the project’s core execution weeks.
-
----
-
-### C. Overall Project Status at the End of Week 7
-
-To evaluate the cumulative performance by Week 7, we examined all task-level data corresponding to this week.
-
-**Schedule Status ($SPI$):**
-
-- Values ranged broadly from $0.5$ to $10.33$.
-- Module B - Task 2 significantly outperformed expectations with the highest $SPI$.
-
-**Cost Status ($CPI$):**
-
-- Ranged from $0.62$ to $5.17$, indicating variable cost performance.
-- Module A - Task 2 and Module B - Task 2 both remained well under budget.
-
-**Cost Variance ($CV$) and Schedule Variance ($SV$):**
-
-- Positive $CV$ and $SV$ were observed in Module A - Task 1 and Task 2, suggesting cost savings and early completion.
-- Conversely, Module B - Task 1 displayed negative $CV$ and $SV$, indicating budget overrun and schedule delays.
-
-**Interpretation:** While the project exhibited strong overall performance by Week 7, several tasks—particularly in Module B—require targeted review due to negative variances.
+```
+├── data_import.py           # Loads and stores cleaned data in SQLite
+├── eva_calculations.py      # Performs EVA metric calculations
+├── analysis.md              # Detailed data-driven interpretation
+├── EVA_data.db              # SQLite DB (auto-generated)
+├── EVA_Analysis.csv         # Metric output file (auto-generated)
+├── PV_data.csv              # Planned Value data (input)
+├── AC_data.csv              # Actual Cost data (input)
+├── EV_data.csv              # Earned Value data (input)
+├── .gitignore               # Ignores virtual env, DB, output files
+└── README.md                # This file
+```
 
 ---
 
-### D. Module-Level Performance Comparison (Module A vs. Module B)
+## 🚀 How to Run the Project
 
-A comparative assessment was conducted to evaluate the performance of the two project modules.
+### 1. Set Up Environment
+```bash
+python -m venv .venv
+source .venv/bin/activate      # macOS/Linux
+.venv\Scripts\activate         # Windows
+pip install pandas numpy matplotlib
+```
 
-**Module A:**
+### 2. Import and Clean Data
+```bash
+python data_import.py
+```
+This will:
+- Load `PV_data.csv`, `AC_data.csv`, `EV_data.csv`
+- Clean and reshape the data
+- Store into `EVA_data.db` with `PV`, `AC`, and `EV` tables
 
-- Demonstrated more consistent $SPI$ and $CPI$ values greater than $1$ across multiple tasks.
-- Task 2 stood out for sustained high performance in both cost and schedule metrics.
+### 3. Perform EVA Calculations
+```bash
+python eva_calculations.py
+```
+This will:
+- Load data from the database
+- Calculate CV, SV, CPI, SPI, and TCPI
+- Export results to `EVA_Analysis.csv`
 
-**Module B:**
-
-- Task 2 showed a strong recovery in Week 7 ($CPI = 5.17$, $SPI = 10.33$).
-- Task 1, however, consistently underperformed in both dimensions.
-
-**Interpretation:** Module A demonstrated stronger and more stable execution throughout the project, while Module B exhibited volatility, with a significant rebound limited to Task 2.
-
----
-
-### E. Analysis of $TCPI$ in Weeks 5 and 6
-
-The To-Complete Performance Index ($TCPI$) was evaluated for Weeks 5 and 6 to understand the level of efficiency required to meet the Budget at Completion ($BAC$) moving forward.
-
-**Key Insights:**
-
-- High $TCPI$ values suggest that exceptionally high future efficiency would be required to remain within budget.
-- In Weeks 5 and 6, several tasks exhibited disproportionately high Actual Cost ($AC$) compared to Earned Value ($EV$) growth, implying a widening gap between $EV$ and $BAC$.
-
-**Example:**
-
-- Module B - Task 1 in Week 6 showed $AC$ nearing $BAC$, while $EV$ remained low, resulting in a spike in $TCPI$.
-
-**Interpretation:** These trends indicate that unless significant performance improvements occurred post-Week 6, achieving $BAC$ would likely prove unfeasible for certain tasks.
+### 4. Read the Analysis
+Open `analysis.md` to review interpretation of the metrics.
 
 ---
 
-### Conclusion
+## 🧪 Key Metrics Calculated
 
-The EVA analysis reveals that while the project achieved positive overall performance, especially in Module A and certain late-stage tasks in Module B, inconsistencies in cost and schedule efficiency remain. The $TCPI$ trends in Weeks 5 and 6 underscore the importance of timely intervention and performance monitoring to ensure budgetary goals are met.
+- **CV**: Cost Variance
+- **SV**: Schedule Variance
+- **CPI**: Cost Performance Index
+- **SPI**: Schedule Performance Index
+- **TCPI**: To-Complete Performance Index
 
-*All analyses were generated through programmatic methods using `EVA_Analysis.csv`. Manual calculations were intentionally avoided to comply with academic requirements.*
+Each metric is calculated per Module, Task, and Week.
+
+---
+
+## 📌 Notes
+- All calculations are programmatic.
+- No manual entry or hardcoded values are used.
+- Outputs are reproducible and driven by the original data files.
+
+---
+
+## 👨‍💻 Author
+Developed by John Dawood for academic purposes. Project demonstrates Python scripting, SQLite integration, and data-driven analysis using real-world project management metrics.
