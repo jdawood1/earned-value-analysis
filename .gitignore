@@ -12,6 +12,10 @@ EVA_data.db
 # Output files
 EVA_Analysis.csv
 
+# IDE project files
+*.iml
+.idea/
+
 # Plots or screenshots (optional, not tracked)
 *.png
 screenshots/
